@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import StartPage from "./components/StartPage";
+import TaskManager from "./components/TaskManager";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+//import Menu from "./components/Menu";
 
-  return (
-    <>
+const App: React.FC = () => {
+   const [userName, setUserName] = useState<string | null>(null);
+   //const [showTaskManager, setShowTaskManager] = useState<boolean>(false);
+
+   const handleStart = (name: string) => {
+      setUserName(name);
+      //setShowTaskManager(false); // Ensure Menu is displayed after starting
+   };
+
+   // const handleNewTaskClick = () => {
+   //    setShowTaskManager(true);
+   // };
+
+   return (
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+         {userName ? (
+            // Directly render TaskManager after entering username
+            <TaskManager userName={userName} />
+         ) : (
+            // Show StartPage if no username is provided
+            <StartPage onStart={handleStart} />
+         )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+   );
+};
 
-export default App
+export default App;
